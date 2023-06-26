@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation </title>
+    <style>
+        #form{
+            width: 30%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid black;
+            padding: 50px;
+            font-size: 18px;
+        }
+        button{
+            width: 18%;
+            margin: auto;
+            background-color: rgb(28, 128, 146);
+            color: white;
+            padding: 7px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        Name
+        <input type="text" id="name" placeholder="name"><br>
+        Email
+        <input type="email"  id="email" placeholder="email"><br>
+        <h3 id="em"></h3>
+        Password
+        <input type="password"  id="password" placeholder="password"><br>
+        <h3 id="pass"></h3>
+        <button>VALIDATE</button>
+    </form>
+    
+</body>
+</html>
+<script>
+    let name=document.getElementById("name")
+    let email=document.getElementById("email")
+    let password=document.getElementById("password")
+    let ema=document.getElementById("em")
+    let pass=document.getElementById("pass")
+    let btn=document.querySelector("button")
+
+
+
+    btn.addEventListener("click",(e)=>{
+        e.preventDefault()
+        if(name.value=="" || email.value==""|| password.value==""){
+            alert("Please fill all the fields")
+        }
+        let car=email.value
+        if(car[0]=="@"){
+            ema.innerText="No character before @ "
+            ema.style.color="red"
+        }else if(car[0]=="."){
+            ema.innerText="An email should not be start with . (dot) "
+            ema.style.color="red"
+        }
+        else if(car.length>6){
+            let s=false
+            let at=false
+            let ind
+            let d=false 
+            let di
+            for(let i=0; i<car.length; i++ ){
+                if(car[i]=="!" || car[i]=="#" || car[i]=="$" || car[i]=="%" || car[i]=="^" ||car[i]=="&" ||
+                car[i]=="*" ||car[i]=="(" ||car[i]==")" ||car[i]=="+" ||car[i]=="=" ||car[i]=="`" ||car[i]=="{" ||car[i]=="}" ||
+                car[i]=="[" || car[i]=="]" ||car[i]=="|" ||car[i]=="\\" ||car[i]==";" ||car[i]==":" ||car[i]=="'" ||car[i]=="," ||car[i]=="/"||car[i]=="?"  ){
+                    
+                    
+                    s=true;
+                    break
+                }
+                else if(car[i]=="@"){
+                   at=true
+                   ind=i
+                   break
+                }
+                else if(car[i]=="."){
+                   d=true
+                   di=i
+                   break
+                }
+            }
+            if(s==true){
+                ema.innerText="Only allows character, digit, underscore, and dash "
+                ema.style.color="red"
+            }
+            else if(at==false){
+                ema.innerText="@ is not present"
+                ema.style.color="red"
+            }
+            else if(at==true&&car[ind+1]=="."){
+                ema.innerText="Domain can not start with dot . "
+                ema.style.color="red"
+            }
+            else if(d==true&& car[di+i]=="."){
+                ema.innerText="Double dots are not allowed "
+                ema.style.color="red"
+            }
+            else if(car[car.length-2]=="."){
+                ema.innerText=`.${car[car.length-1]} is not a valid tld `
+                ema.style.color="red"
+            }
+        }else{
+            ema.innerText="Email is correct"
+                ema.style.color="green" 
+        }
+        
+        
+
+
+        if(password.value.length<=6){
+        pass.innerText="Length of password should be greater than 6."
+        pass.style.color="red"
+        }
+        else {
+            let bag=password.value;
+            for(let i=0; i<bag.length; i++){
+                let a=true;
+                let b=true
+                let c=true
+
+                if(bag[i]=="!" || bag[i]=="@" || bag[i]=="#" || bag[i]=="$" || bag[i]=="%" || bag[i]=="^" ||bag[i]=="&" ||
+                bag[i]=="*" ||bag[i]=="(" ||bag[i]==")" ||bag[i]=="-" ||bag[i]=="+" ||bag[i]=="=" ||bag[i]=="`" ||bag[i]=="{" ||bag[i]=="}" ||
+                bag[i]=="[" || bag[i]=="]" ||bag[i]=="|" ||bag[i]=="\\" ||bag[i]==";" ||bag[i]==":" ||bag[i]=="'" ||bag[i]=="," ||bag[i]=="/" ||bag[i]=="."||bag[i]=="?"  ){
+                    
+                    
+                    c=false;
+                    break
+                }
+                else if(bag[i]=="A" || bag[i]=="B" || bag[i]=="C" || bag[i]=="D" || bag[i]=="E" ||bag[i]=="F" ||bag[i]=="G" ||bag[i]=="H" ||
+                bag[i]=="I" || bag[i]=="J" || bag[i]=="K" ||bag[i]=="L" ||bag[i]=="M" ||bag[i]=="N" ||bag[i]=="O" ||bag[i]=="P" ||bag[i]=="Q" ||
+                bag[i]=="R" ||bag[i]=="S" ||bag[i]=="T" ||bag[i]=="U" ||bag[i]=="V" ||bag[i]=="W" ||bag[i]=="X" ||bag[i]=="Y" ||bag[i]=="Z" ){
+                  a=false
+                  break
+                  
+                }
+                //else if(a==0){
+                   // pass.innerText="At-least one uppercase alphabet password."
+                   // pass.style.color="red"
+                //}
+                else if(bag[i]=="1"||bag[i]=="2"||bag[i]=="3"||bag[i]=="4"||bag[i]=="5"||bag[i]=="6"||bag[i]=="7"||bag[i]=="8"||bag[i]=="9"||bag[i]=="0"){
+                     b=false
+                     break
+                }
+
+                
+
+            }
+            if(a==true){
+                pass.innerText="At-least one uppercase alphabet password."
+                    pass.style.color="red"
+            }
+            else if (b==true){
+                pass.innerText="At-least one numeric value must be used in the password."
+                 pass.style.color="red"
+            }
+            else if(c==true){
+                pass.innerText="Only alphanumeric inputs are accepted in the password field."
+                    pass.style.color="red"
+            }
+           else if(b==false && a==false && c==false){
+                   pass.innerText="Password is correct"
+                    pass.style.color="green"
+            }
+            
+        }
+    })
+
+</script>
